@@ -1,121 +1,104 @@
 package com.tabesto.zwing.tabesto.UI;
 
-import android.annotation.SuppressLint;
+
 import android.content.Context;
-import android.os.AsyncTask;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.widget.Toast;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.tabesto.zwing.tabesto.Parcelable.Meal;
+
+import com.tabesto.zwing.tabesto.Adapter.MyAdapter;
+import com.tabesto.zwing.tabesto.Models.Meal;
 import com.tabesto.zwing.tabesto.R;
+import com.tabesto.zwing.tabesto.Service.DataBaseManagerWS;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
+
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-import javax.net.ssl.HttpsURLConnection;
 
 public class MainActivity extends AppCompatActivity {
 
+    // Context
     private Context ctx = this;
 
-    protected String URL = "https://www.themealdb.com/api/json/v1/1/latest.php";
-    private List<Meal> meals = new ArrayList<>();
+    //Models
+    public List<Meal> meals;
+
+    //Data
+    public static String data = "";
+
+    //Views
+    public static RecyclerView recyclerView;
+    public static RecyclerView.Adapter adapter;
+    private RecyclerView.LayoutManager layoutManager;
+    private LayoutAnimationController animation;
+    private Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        getAllMeals();
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+
+        meals = new ArrayList<>();
+
+        buildRecyclerView();
+        loadData();
+
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        showItems();
+    }
+
+    private void buildRecyclerView(){
+        recyclerView = findViewById(R.id.recycler_view);
+        recyclerView.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(this);
+        animation = AnimationUtils.loadLayoutAnimation(recyclerView.getContext(), R.anim.layout_animation);
+
+        adapter = new MyAdapter(ctx);
+
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setLayoutAnimation(animation);
+        recyclerView.setAdapter(adapter);
+        recyclerView.scheduleLayoutAnimation();
+    }
+
+    private void loadData(){
+        Log.v("TEST", "loadData()");
+        DataBaseManagerWS.getInstance().execute();
+    }
+
+    public static void showItems(){
+
+
+
+        adapter.notifyDataSetChanged(); //not working
+        //adapter = new MyAdapter(meals);
+        //recyclerView.setAdapter(adapter);
+
+        recyclerView.scheduleLayoutAnimation();
 
     }
 
 
-    private void getAllMeals(){
-        new DataBaseManagerWS().execute(URL);
-    }
-
-    private void showItems(){
-        //Toast.makeText(ctx, meals.get(0).toString(), Toast.LENGTH_LONG);
-    }
-
-    public class DataBaseManagerWS extends AsyncTask<String, Void, Void> {
-
-        private String temp;
-
-
-        private TypeReference<List<Meal>> typeReference = new TypeReference<List<Meal>>() {
-        };
-        private StringBuilder result;
-        private ObjectMapper mapper = new ObjectMapper();
-
-
-        private HttpURLConnection urlConnection;
-
-        public DataBaseManagerWS() {
-        }
-
-        @Override
-        protected Void doInBackground(String... params) {
-
-            result = new StringBuilder();
-            try {
-
-                urlConnection = (HttpsURLConnection) new URL(params[0]).openConnection();
-                InputStream in = new BufferedInputStream(urlConnection.getInputStream());
-
-                BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    result.append(line);
-                }
-                temp = result.toString();
-                Log.v("TEST", temp);
-                //String[] res = temp.split("meals\":");
-                //Log.v("TEST", res[1]);
-
-                meals = mapper.readValue(temp, typeReference);
-
-            } catch (Exception e) {
-                e.printStackTrace();
-                meals = Collections.emptyList();
-            } finally {
-                urlConnection.disconnect();
-            }
-            return null;
-
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-
-            //Log.v("TEST", meals.get(0).toString() );
-            if(meals.get(0)!=null){
-                Toast.makeText(ctx, meals.get(0).toString(), Toast.LENGTH_LONG).show();
-            }
-
-        }
-
-    /*private static DataBaseManagerWS INSTANCE = new DataBaseManagerWS();
-
-    public static DataBaseManagerWS getInstance()
-    {   return INSTANCE;
-    }*/
 
 
 
-    }
+
+
 }
