@@ -9,15 +9,21 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
+import com.tabesto.zwing.tabesto.Adapter.IngredientAdapter;
 import com.tabesto.zwing.tabesto.Adapter.MyAdapter;
 import com.tabesto.zwing.tabesto.Models.Meal;
 import com.tabesto.zwing.tabesto.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DetailActivity extends AppCompatActivity {
 
@@ -37,7 +43,8 @@ public class DetailActivity extends AppCompatActivity {
     private TextView tvName;
     private TextView tvCategory;
     private TextView tvArea;
-    private TextView tvIngredients;
+    //private TextView tvIngredients;
+    private ListView lvIngredients;
     private TextView tvPrice;
     private Button btnOrder;
     private Toolbar toolbar;
@@ -79,7 +86,8 @@ public class DetailActivity extends AppCompatActivity {
         tvName = findViewById(R.id.tv_name_detail);
         tvCategory = findViewById(R.id.tv_category_detail);
         tvArea = findViewById(R.id.tv_area_detail);
-        tvIngredients = findViewById(R.id.tv_ingredients_detail);
+        //tvIngredients = findViewById(R.id.tv_ingredients_detail);
+        lvIngredients = findViewById(R.id.lvIngredients);
 
         tvPrice = findViewById(R.id.tv_price_detail);
         btnOrder = findViewById(R.id.btn_order);
@@ -99,10 +107,18 @@ public class DetailActivity extends AppCompatActivity {
         tvName.setText(meal.getStrMeal());
         tvCategory.setText(meal.getStrCategory());
         tvArea.setText(meal.getStrArea());
-        String strIngredients = "Ingredients :\n     - "+ meal.getStrIngredient1()
+        List<String> ingredients = new ArrayList<>();
+        ingredients.add(meal.getStrIngredient1());
+        ingredients.add(meal.getStrIngredient2());
+        ingredients.add(meal.getStrIngredient3());
+
+        IngredientAdapter adapter = new IngredientAdapter(ctx, ingredients);
+        lvIngredients.setAdapter(adapter);
+
+        /*String strIngredients = "Ingredients :\n     - "+ meal.getStrIngredient1()
                 +"\n     - "+ meal.getStrIngredient2()
                 +"\n     - "+ meal.getStrIngredient3();
-        tvIngredients.setText(strIngredients);
+        tvIngredients.setText(strIngredients);*/
         tvPrice.setText(meal.getPrice());
 
     }

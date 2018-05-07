@@ -23,29 +23,55 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAlignment="center"
+        android:layout_marginTop="10dp"
+        android:textAllCaps="true"
         android:textColor="@color/textColorPrimary"
-        android:textStyle="bold" />
+        android:textSize="14sp" />
 
     <TextView
         android:id="@+id/tv_name_detail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textAlignment="center"
         android:textColor="@color/textColor"
         android:textSize="30sp"
+        android:layout_marginTop="20dp"
         android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tv_area_detail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textAlignment="center"
         android:textColor="@color/textColor"
         android:textSize="18sp" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_margin="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"/>
 
     <TextView
-        android:id="@+id/tv_ingredients_detail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="18sp" />
+        android:text="@string/detail_ingredients"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_margin="10dp"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"/>
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/lvIngredients"
+        android:dividerHeight="0dp"
+        android:divider="@null"/>
+
 
     <LinearLayout
         android:layout_width="match_parent"

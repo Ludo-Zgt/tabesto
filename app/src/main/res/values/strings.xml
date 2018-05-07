@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">GOURMANT</string>
     <string name="detail_ordeer">Order</string>
+    <string name="detail_ingredients">Ingredients</string>
 </resources>

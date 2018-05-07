@@ -44,11 +44,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         this.ctxActivity = ctx;
     }
 
-    public void notification(){
-
-        notifyDataSetChanged();
-    }
-
 
     /**
      * Get the size of items in adapter
