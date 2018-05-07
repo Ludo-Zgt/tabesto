@@ -9,12 +9,13 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <include layout="@layout/toolbar"></include>
         <ImageView
             android:id="@+id/imageview"
             android:layout_width="match_parent"
             android:layout_height="200dp"
             android:scaleType="centerCrop"/>
+        <include layout="@layout/toolbar_transparent"></include>
+
     </FrameLayout>
 
     <TextView

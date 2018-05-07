@@ -7,6 +7,7 @@ public class Meal implements Serializable {
 
     private String strMeal;
     private String strCategory;
+    //private String strInstructions;
     private String strMealThumb;
     private String strArea;
     private String strIngredient1;
@@ -44,6 +45,14 @@ public class Meal implements Serializable {
     public void setStrCategory(String strCategory) {
         this.strCategory = strCategory;
     }
+
+   /* public String getStrInstructions() {
+        return strInstructions;
+    }
+
+    public void setStrInstructions(String strInstructions) {
+        this.strInstructions = strInstructions;
+    }*/
 
     public String getStrMealThumb() {
         return strMealThumb;

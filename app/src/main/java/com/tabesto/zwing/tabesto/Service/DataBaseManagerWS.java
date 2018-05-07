@@ -66,6 +66,7 @@ public class DataBaseManagerWS extends AsyncTask<Void, Void, Void> {
                 jo = (JSONObject) ja.get(i);
                 singleParsed = "{'strMeal':'"+jo.getString("strMeal")+"',"+
                         "'strCategory':'"+jo.getString("strCategory")+"',"+
+                        //"'strArea':'"+jo.getString("strInstruction").replace("\"", "")+"',"+
                         "'strMealThumb':'"+jo.getString("strMealThumb")+"',"+
                         "'strArea':'"+jo.getString("strArea")+"',"+
                         "'strIngredient1':'"+jo.getString("strIngredient1")+"',"+

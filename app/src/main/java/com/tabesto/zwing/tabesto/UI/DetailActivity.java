@@ -4,7 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -37,6 +40,7 @@ public class DetailActivity extends AppCompatActivity {
     private TextView tvIngredients;
     private TextView tvPrice;
     private Button btnOrder;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,12 +54,27 @@ public class DetailActivity extends AppCompatActivity {
 
         setupViews();
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
 
 
-
+        switch (id){
+            case android.R.id.home:
+                finish();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void initViews(){
+
+        toolbar = findViewById(R.id.toolbar_transparent);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         image = findViewById(R.id.imageview);
         tvName = findViewById(R.id.tv_name_detail);
         tvCategory = findViewById(R.id.tv_category_detail);
