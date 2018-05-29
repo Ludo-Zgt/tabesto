@@ -1,2 +1,2 @@
 # tabesto
-Liste de plats
+This app display food from an API
